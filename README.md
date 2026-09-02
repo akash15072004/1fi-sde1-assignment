@@ -1,66 +1,78 @@
-# 1Fi SDE1 Assignment — EMI Product Store
+# 1Fi SDE1 Assignment – EMI & Product Platform
 
-A full-stack EMI product application built for the 1Fi SDE1 assignment. The application displays smartphone products, variants, pricing and EMI plans using data stored in PostgreSQL and accessed through a REST API.
+A full-stack web application built as part of the **1Fi SDE1 Assignment**.
+
+The application allows users to explore products, select variants, view EMI plans, compare monthly payments, interest rates and cashback, and proceed with a selected EMI plan.
+
+The application is database-driven and built using React, Node.js, Express, Prisma and PostgreSQL.
+
+---
 
 ## Live Demo
 
-- **Frontend:** https://1fi-sde1-assignment-one.vercel.app
-- **Backend:** https://onefi-sde1-assignment-m43y.onrender.com
-- **Repository:** https://github.com/akash15072004/1fi-sde1-assignment
+**Frontend:**  
+https://1fi-sde1-assignment-one.vercel.app
+
+**Backend:**  
+https://onefi-sde1-assignment-m43y.onrender.com
+
+**GitHub:**  
+https://github.com/akash15072004/1fi-sde1-assignment
 
 ### Product Pages
 
-- `/products/iphone-17-pro`
-- `/products/samsung-s24-ultra`
-- `/products/google-pixel-9-pro`
+- **iPhone 17 Pro**  
+  https://1fi-sde1-assignment-one.vercel.app/products/iphone-17-pro
+
+- **Samsung Galaxy S24 Ultra**  
+  https://1fi-sde1-assignment-one.vercel.app/products/samsung-s24-ultra
+
+- **Google Pixel 9 Pro**  
+  https://1fi-sde1-assignment-one.vercel.app/products/google-pixel-9-pro
+
+---
 
 ## Features
 
-- Database-driven product and EMI information
-- 3 smartphones with 2 variants each
-- Unique product pages using URL slugs
-- Variant selection by storage and color
-- MRP, selling price, discount and product images
-- Multiple EMI plans per variant
+- Product and variant selection
+- Storage and color options
+- MRP and selling price
+- Multiple EMI plans
 - 0% and 10.5% interest options
-- Monthly payment, tenure and cashback details
+- Monthly EMI calculation
+- Cashback information
 - EMI plan selection
-- Proceed flow with application reference
-- Responsive frontend
-- REST APIs with validation
-- Prisma ORM and PostgreSQL
-- Seed data for local and production setup
+- Proceed functionality with application reference
+- Responsive user interface
+- REST API integration
+- PostgreSQL database
+- Prisma ORM
+- Unique URLs for products
+- Production deployment
+
+---
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 18, TypeScript, Vite, React Router |
+| Frontend | React, TypeScript, Vite |
+| Routing | React Router |
 | Styling | CSS |
-| Backend | Node.js, Express 5, TypeScript |
+| Backend | Node.js, Express.js, TypeScript |
 | Validation | Zod |
 | ORM | Prisma |
-| Database | PostgreSQL 16 |
+| Database | PostgreSQL |
 | Frontend Deployment | Vercel |
 | Backend Deployment | Render |
+
+---
 
 ## Project Structure
 
 ```text
 1fi-sde1-assignment/
-├── backend/
-│   ├── prisma/
-│   │   ├── migrations/
-│   │   ├── schema.prisma
-│   │   └── seed.ts
-│   └── src/
-│       ├── routes/
-│       │   └── product.routes.ts
-│       ├── utils/
-│       │   └── slug.ts
-│       ├── app.ts
-│       ├── prisma.ts
-│       └── server.ts
+│
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
@@ -68,94 +80,67 @@ A full-stack EMI product application built for the 1Fi SDE1 assignment. The appl
 │   │   ├── services/
 │   │   ├── types/
 │   │   ├── App.tsx
-│   │   ├── main.tsx
-│   │   └── styles.css
+│   │   └── main.tsx
+│   ├── public/
 │   ├── vercel.json
-│   └── vite.config.ts
+│   └── package.json
+│
+├── backend/
+│   ├── src/
+│   ├── prisma/
+│   │   ├── schema.prisma
+│   │   └── seed.ts
+│   ├── package.json
+│   └── tsconfig.json
+│
 ├── docker-compose.yml
-├── .gitignore
-└── README.md
+├── README.md
+└── package.json
 ````
+
+---
 
 ## Database Design
 
-The application uses three main entities:
+The application uses a relational PostgreSQL database with the following relationships:
 
 ```text
 Product
    │
    └── Variant
           │
-          └── EMIPlan
+          └── EMI Plan
 ```
 
 ### Product
 
-Stores product-level information such as:
-
-* Name
-* Brand
-* Category
-* URL slug
+Stores product-level information such as name, slug, image, MRP and selling price.
 
 ### Variant
 
-Stores:
+Stores configuration-specific information such as color and storage.
 
-* Storage
-* Color
-* Image
-* MRP
-* Selling price
+### EMI Plan
 
-### EMIPlan
+Stores tenure, interest rate, monthly payment and cashback for each variant.
 
-Stores:
+---
 
-* Tenure
-* Interest rate
-* Monthly payment
-* Cashback
+## Products & Variants
 
-Relationship:
+The seeded database contains **3 products with 2 variants each**.
 
-```text
-Product 1 ──── N Variant
-Variant 1 ──── N EMIPlan
-```
+| Product                  | Variants                                       |
+| ------------------------ | ---------------------------------------------- |
+| iPhone 17 Pro            | Cosmic Orange – 256GB, Silver – 256GB          |
+| Samsung Galaxy S24 Ultra | Titanium Gray – 256GB, Titanium Violet – 512GB |
+| Google Pixel 9 Pro       | Obsidian – 256GB, Porcelain – 512GB            |
 
-The schema is available in:
+Each variant contains EMI options for **3, 6, 12, 24, 36, 48 and 60 months**.
 
-```text
-backend/prisma/schema.prisma
-```
+---
 
-## Products
-
-### Apple iPhone 17 Pro
-
-* Cosmic Orange / 256GB
-* Silver / 256GB
-
-### Samsung Galaxy S24 Ultra
-
-* Titanium Gray / 256GB
-* Titanium Violet / 512GB
-
-### Google Pixel 9 Pro
-
-* Obsidian / 256GB
-* Porcelain / 512GB
-
-Each variant has multiple EMI plans.
-
-## API
-
-Base URL:
-
-```text
-https://onefi-sde1-assignment-m43y.onrender.com/api
-```
+## Backend API
 
 ### Health Check
 
@@ -163,22 +148,19 @@ https://onefi-sde1-assignment-m43y.onrender.com/api
 GET /api/health
 ```
 
-Example:
+Production:
 
-```json
-{
-  "success": true,
-  "message": "1Fi EMI API is healthy"
-}
-```
+[https://onefi-sde1-assignment-m43y.onrender.com/api/health](https://onefi-sde1-assignment-m43y.onrender.com/api/health)
 
-### Get Products
+### Get All Products
 
 ```http
 GET /api/products
 ```
 
-Returns available product summaries.
+Production:
+
+[https://onefi-sde1-assignment-m43y.onrender.com/api/products](https://onefi-sde1-assignment-m43y.onrender.com/api/products)
 
 ### Get Product
 
@@ -186,12 +168,14 @@ Returns available product summaries.
 GET /api/products/:slug
 ```
 
-Returns product details, variants, pricing and EMI plans.
+Production examples:
 
-Example:
+```text
+https://onefi-sde1-assignment-m43y.onrender.com/api/products/iphone-17-pro
 
-```http
-GET /api/products/iphone-17-pro
+https://onefi-sde1-assignment-m43y.onrender.com/api/products/samsung-s24-ultra
+
+https://onefi-sde1-assignment-m43y.onrender.com/api/products/google-pixel-9-pro
 ```
 
 ### Get Variant
@@ -200,15 +184,13 @@ GET /api/products/iphone-17-pro
 GET /api/products/:slug/variants/:variantId
 ```
 
-Returns the selected variant and its EMI plans.
-
-### Proceed With EMI Plan
+### Proceed with EMI Plan
 
 ```http
 POST /api/products/emi-plans/:planId/proceed
 ```
 
-Request:
+Request body:
 
 ```json
 {
@@ -216,44 +198,44 @@ Request:
 }
 ```
 
-Example response:
-
-```json
-{
-  "success": true,
-  "data": {
-    "applicationReference": "1FI-AB12CD34",
-    "message": "Plan selected successfully"
-  }
-}
-```
+---
 
 ## Local Setup
 
-### Requirements
+### Prerequisites
 
-* Node.js 20+
-* npm 10+
-* Docker Desktop
-* PostgreSQL 14+ if Docker is not used
+* Node.js
+* npm
+* PostgreSQL
 
-### Start Database
-
-From the project root:
-
-```bash
-docker compose up -d db
-```
+Docker can also be used for PostgreSQL.
 
 ### Backend
 
 ```bash
 cd backend
-cp .env.example .env
 npm install
+```
+
+Create `.env`:
+
+```env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/onefi"
+PORT=5000
+FRONTEND_URL="http://localhost:5173"
+```
+
+Run Prisma:
+
+```bash
 npx prisma generate
-npx prisma migrate dev --name init
+npx prisma migrate dev
 npm run seed
+```
+
+Start the backend:
+
+```bash
 npm run dev
 ```
 
@@ -265,12 +247,20 @@ http://localhost:5000
 
 ### Frontend
 
-Open another terminal:
-
 ```bash
 cd frontend
-cp .env.example .env
 npm install
+```
+
+Create `.env`:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+Start the frontend:
+
+```bash
 npm run dev
 ```
 
@@ -280,155 +270,113 @@ Frontend:
 http://localhost:5173
 ```
 
-Example product page:
-
-```text
-http://localhost:5173/products/iphone-17-pro
-```
+---
 
 ## Environment Variables
 
 ### Backend
 
 ```env
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/onefi_emi?schema=public"
+DATABASE_URL="your-postgresql-connection-string"
 PORT=5000
-FRONTEND_URL="http://localhost:5173"
+FRONTEND_URL="your-frontend-url"
 ```
 
 ### Frontend
 
 ```env
-VITE_API_URL="http://localhost:5000/api"
+VITE_API_URL="your-backend-api-url/api"
 ```
 
-Production values should be configured through the respective deployment platform. Do not commit secrets to GitHub.
-
-## Seed Data
-
-The project includes seed data for all three products and their variants.
-
-Run:
-
-```bash
-npm run seed
-```
-
-For production migrations:
-
-```bash
-npx prisma migrate deploy
-```
+---
 
 ## Deployment
 
-### Backend — Render
+### Vercel
 
-* Root directory: `backend`
-* Build command:
+Frontend configuration:
+
+```text
+Root Directory: frontend
+Build Command: npm run build
+Output Directory: dist
+```
+
+Production API:
+
+```env
+VITE_API_URL=https://onefi-sde1-assignment-m43y.onrender.com/api
+```
+
+`vercel.json` is included to support direct navigation to product routes.
+
+### Render
+
+Backend build command:
 
 ```bash
 npm install && npx prisma generate && npx prisma migrate deploy && npm run seed && npm run build
 ```
 
-* Start command:
+Start command:
 
 ```bash
 npm start
 ```
 
-Required environment variables:
-
-```text
-DATABASE_URL
-PORT
-FRONTEND_URL
-```
-
-### Frontend — Vercel
-
-* Root directory: `frontend`
-* Build command:
-
-```bash
-npm run build
-```
-
-* Output directory:
-
-```text
-dist
-```
-
-Environment variable:
-
-```text
-VITE_API_URL=https://onefi-sde1-assignment-m43y.onrender.com/api
-```
-
-`vercel.json` provides SPA routing support for direct product URLs.
+---
 
 ## Useful Commands
 
 ### Backend
 
 ```bash
+npm install
 npm run dev
 npm run build
 npm start
 npm run seed
-npm run prisma:studio
+npx prisma generate
+npx prisma migrate dev
+npx prisma migrate deploy
 ```
 
 ### Frontend
 
 ```bash
+npm install
 npm run dev
 npm run build
-npm run preview
 ```
-
-## Demo Video
-
-The 2–5 minute demonstration covers:
-
-1. Product page and responsive UI
-2. Product URL and slug-based navigation
-3. Variant switching
-4. EMI plan selection
-5. Interest rate and cashback
-6. Proceed confirmation flow
-7. Backend API responses
-8. Prisma database schema
-9. PostgreSQL data
-10. Frontend → API → database architecture
-
-## Assignment Checklist
-
-* [x] Dynamic product details
-* [x] Product variants
-* [x] MRP and selling price
-* [x] Product images
-* [x] Multiple EMI plans
-* [x] Monthly payment
-* [x] Tenure
-* [x] Interest rate
-* [x] Cashback
-* [x] EMI selection
-* [x] Proceed flow
-* [x] REST backend API
-* [x] PostgreSQL database
-* [x] Prisma schema
-* [x] Seed data
-* [x] 3 products
-* [x] 2 variants per product
-* [x] Unique product URLs
-* [x] Responsive frontend
-* [x] Deployed frontend and backend
-
 
 ---
 
-### Built with ❤️ by Akash
+## Assignment Checklist
 
-Developed as part of the 1Fi SDE1 Assignment.
+* [x] React frontend
+* [x] Responsive product page
+* [x] Product variants
+* [x] MRP and selling price
+* [x] Multiple EMI plans
+* [x] 0% and 10.5% interest rates
+* [x] Monthly payment and cashback
+* [x] EMI selection
+* [x] Proceed functionality
+* [x] Backend REST APIs
+* [x] PostgreSQL database
+* [x] Prisma ORM
+* [x] Database seed data
+* [x] 3 products with 2 variants each
+* [x] Unique product URLs
+* [x] Production deployment
+
+---
+
+## Developed By
+
+**Akash**
+
+### Built as part of the 1Fi SDE1 Assignment
+
+
+
